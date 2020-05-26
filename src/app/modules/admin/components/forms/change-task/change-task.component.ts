@@ -14,9 +14,9 @@ export class ChangeTaskComponent implements OnInit{
   public form: FormGroup;
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      title: [this.task.title, Validators.compose([Validators.required, Validators.maxLength(100)])],
-      description: [this.task.description, Validators.compose([Validators.required, Validators.maxLength(1000)])],
-      priority: [this.task],
+      title: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
+      description: ['', Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      priority: [''],
       status: ['']
     });
   }

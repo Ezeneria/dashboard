@@ -1,0 +1,6 @@
+<form [formGroup]="form"  class="form-change-task" (ngSubmit)="submit()">
+  <app-input formControlName="title"></app-input>
+</form>
+
+
+<button (click)="changeTask()">Change task</button>

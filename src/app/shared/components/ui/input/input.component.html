@@ -1,0 +1,6 @@
+<label for="">
+  <span>
+    {{ placeholder }}
+  </span>
+  <input type="text" (input)="onChange($event.target.value)" [value]="value">
+</label>

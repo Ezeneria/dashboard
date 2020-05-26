@@ -1,0 +1,76 @@
+@import "./../../../../assets/variables";
+.list {
+  width: 100%;
+  padding: 20px 10px;
+  &-item {
+    margin-bottom: 14px;
+    border-radius: 2px;
+    box-shadow: #00000073 0 9px 10px 0;
+    cursor: pointer;
+    &:hover {
+      .header {
+        padding: 5px 10px;
+        border-radius: 3px 3px 0 0;
+        &.progress {
+          background-color: $torch-red-600;
+        }
+
+        &.done {
+          background-color: $done;
+        }
+      }
+    }
+    .header {
+      padding: 5px 10px;
+      border-radius: 3px 3px 0 0;
+      &.progress {
+        border: 1px solid $torch-red-600;
+        transition: all .2s linear;
+      }
+      &.done {
+        border: 1px solid $done;
+        transition: all .2s linear;
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .status {
+          font-weight: 600;
+          font-size: 10px;
+          text-transform: uppercase;
+          padding: 2px 4px;
+          background-color: white;
+          border-radius: 3px;
+        }
+        .priority {
+          font-weight: 600;
+          font-size: 8px;
+          text-transform: uppercase;
+          padding: 2px 4px;
+          border-radius: 3px;
+          background-color: white;
+          &-high {
+            color: $torch-red-600;
+          }
+          &-low {
+            color: $done;
+          }
+          &-mid {
+            color: steelblue;
+          }
+        }
+      }
+      .title {
+        margin-top: 8px;
+        color: white;
+      }
+    }
+    .body{
+      padding: 10px;
+      font-size: 11px;
+      color: $light-grey-300;
+      background-color: $dark-grey-500;
+    }
+  }
+}

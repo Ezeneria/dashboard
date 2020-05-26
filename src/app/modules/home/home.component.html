@@ -1,0 +1,13 @@
+<div class="home">
+  <form [formGroup]="form" (ngSubmit)="submit($event)" class="form">
+    <label for="username">
+      <span>Your name:</span>
+      <input formControlName="username" id="username" type="text">
+    </label>
+    <label for="password">
+      <span>Password:</span>
+      <input formControlName="password" id="password"  type="text">
+    </label>
+    <button type="submit" class="btn">Submit</button>
+  </form>
+</div>

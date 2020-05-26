@@ -1,0 +1,21 @@
+<div *ngIf="list" class="list">
+  <div *ngFor="let item of list; trackBy: trackByFn" class="list-item" (click)="openTask(item)">
+    <div class="header" [ngClass]="item.status | lowercase">
+      <div class="top">
+        <div class="status">
+          {{ item.status }}
+        </div>
+        <div
+          class="priority" [ngClass]="'priority-' + item.priority | lowercase">
+          {{ item.priority }}
+        </div>
+      </div>
+      <div class="title">
+        {{ item.title }}
+      </div>
+    </div>
+    <div class="body">
+      {{ item.description }}
+    </div>
+  </div>
+</div>

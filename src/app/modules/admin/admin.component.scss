@@ -1,0 +1,27 @@
+@import "./../../../assets/variables";
+
+.admin {
+  min-height: 600px;
+  background-color: $dark-grey-800;
+  .search {
+    display: block;
+    margin-bottom: 12px;
+  }
+  .add-task {
+    text-align: center;
+  }
+  .tasks {
+    display: flex;
+    justify-content: center;
+
+    .list {
+      margin-right: 36px;
+      max-width: 300px;
+      width: 100%;
+      &:last-child {
+        margin-right: 0;
+      }
+
+    }
+  }
+}

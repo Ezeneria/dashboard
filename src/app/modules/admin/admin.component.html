@@ -1,0 +1,28 @@
+<div class="admin">
+  <div class="container">
+    <app-filter-search
+      class="search"
+      (searchWord)="searchResult($event)">
+    </app-filter-search>
+    <div class="add-task">
+      <button class="btn" (click)="addTask($event)">
+        Add task
+      </button>
+    </div>
+    <div class="tasks">
+      <div class="list">
+        <app-list
+          class="app-list"
+          (changedTask) = "changeTask($event)"
+          [list]="tasks | filter: status.progress: search">
+        </app-list>
+      </div>
+      <div class="list">
+        <app-list
+          class="app-list"
+          [list]="tasks | filter: status.done: search">
+        </app-list>
+      </div>
+    </div>
+  </div>
+</div>

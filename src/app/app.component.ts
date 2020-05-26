@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthenticateService} from './core/services/autheticate-service.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-dream-app';
+  constructor(
+    private router: Router,
+    private authenticateService: AuthenticateService,
+  ) {
+    // if (this.authenticateService.currentUserValue) {
+    //   this.router.navigate(['/admin']);
+    // }
+  }
+
 }

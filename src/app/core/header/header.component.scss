@@ -1,0 +1,9 @@
+@import "./../../../assets/variables";
+.header {
+  background-color: $dark-grey-800;
+  padding: 10px 0 20px;
+  .logout {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

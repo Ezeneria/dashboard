@@ -8,7 +8,7 @@ import {Task} from '../../../assets/models/models';
 export class FilterPipe implements PipeTransform {
 
   transform(value?: Task[], status?: string, priority?: string): Task[] {
-    if (priority) {
+    if (priority && priority.length >= 3) {
       return value.filter(v =>
         v.status.toLowerCase() === status.toLowerCase() && v.priority.toLowerCase().includes(priority.toLowerCase()));
     }

@@ -9,6 +9,7 @@ import { FilterSearchComponent } from './components/filter-search/filter-search.
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { InputComponent } from './components/ui/input/input.component';
 import { SelectComponent } from './components/ui/select/select.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SelectComponent } from './components/ui/select/select.component';
     DialogComponent,
     FilterSearchComponent,
     InputComponent,
-    SelectComponent
+    SelectComponent,
+    PaginationComponent
   ],
   exports: [
     ListComponent,

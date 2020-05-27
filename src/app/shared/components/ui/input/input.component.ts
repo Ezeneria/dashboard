@@ -13,10 +13,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() public placeholder = 'placeholder';
+  @Input() public textarea = false;
+
   public value;
 
-  constructor() { }
-  onChange: () => void;
+  onChange: (e) => void;
   onTouch: () => void;
 
 

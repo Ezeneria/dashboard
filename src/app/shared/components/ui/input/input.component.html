@@ -1,6 +1,19 @@
-<label for="">
-  <span>
+<div class="input">
+  <label for="">
+  <span *ngIf="placeholder">
     {{ placeholder }}
   </span>
-  <input type="text" (input)="onChange($event.target.value)" [value]="value">
-</label>
+    <input
+    class="nomax"
+    *ngIf="!textarea"
+    type="text"
+    (input)="onChange($event.target.value)" [value]="value"
+  >
+    <textarea
+      *ngIf="textarea"
+      type="text"
+      (input)="onChange($event.target.value)"
+      [value]="value">
+    </textarea>
+  </label>
+</div>

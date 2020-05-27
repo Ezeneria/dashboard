@@ -15,42 +15,23 @@ export class SelectComponent {
   @Input() id = 'select';
   @Input() options: [string];
   @Input() selectedOption: string;
+  @Input() public placeholder = 'placeholder';
 
-  public form: FormGroup;
-  public select: string;
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      animationType: [this],
-    });
+  public value;
+
+  onChange: (e) => void;
+  onTouch: () => void;
+
+
+  registerOnChange(fn: any){
+    this.onChange = fn;
   }
 
-  reset() {
-    this.form.reset();
+  registerOnTouched(fn: any){
+    this.onTouch = fn;
   }
 
-  // selectionChanged(event) {
-  //   this.selectionChange.emit(new MatSelectChange(this.matSelect, event.value));
-  //   this.valueChange.emit(event.value);
-  //   this.onChange(event.value);
-  //   this.onTouched();
-  // }
-  //
-  // onChange: any = () => { };
-  // onTouched: any = () => { };
-  //
-  // registerOnChange(fn: any) {
-  //   this.onChange = fn;
-  // }
-  //
-  // registerOnTouched(fn: any) {
-  //   this.onTouched = fn;
-  // }
-  //
-  // writeValue(value: any) {
-  //   this.select = value;
-  // }
-  //
-  // setDisabledState(isDisabled: boolean) {
-  //   //this.disabled = isDisabled;
-  // }
+  writeValue(value: string): void {
+    this.value = value ? value : '';
+  }
 }

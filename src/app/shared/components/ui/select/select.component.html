@@ -1,7 +1,8 @@
 <label for="{{id}}">
-  <select id="{{id}}" [(ngModel)]="selectedOption">
+  <select id="{{id}}" [(ngModel)]="selectedOption" [value]="value">
     <option *ngFor="let option of options; index as index;" [ngValue]="index">
       {{ option }}
     </option>
   </select>
 </label>
+

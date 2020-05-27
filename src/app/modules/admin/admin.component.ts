@@ -6,15 +6,25 @@ import {FormNewTaskComponent} from './components/forms/form-new-task/form-new-ta
 import {DialogComponent} from '../../shared/components/dialog/dialog.component';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {ChangeTaskComponent} from './components/forms/change-task/change-task.component';
+import {Observable, Subject} from 'rxjs';
+
+interface MethodTask {
+  method: string;
+  task: Task;
+}
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
+
 export class AdminComponent implements OnInit {
   public search: string;
   public status = eStatusTask;
   public tasks: Task[] = [];
+
+  public dataChartObs = new Subject();
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog)
@@ -23,10 +33,21 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.getTasks().subscribe((tasks: Task[]) => {
       this.tasks = tasks;
+      this.updateDataChart(tasks);
     });
   }
 
-  addTask(e) {
+  updateDataChart(data) {
+    const localData = data.reduce((o, i: Task) => {
+      if (!o.hasOwnProperty(i.status)) {
+        o[i.status] = 0;
+      }
+      o[i.status]++;
+      return o;
+    }, {});
+    this.dataChartObs.next(localData);
+  }
+  addTaskDialog(e) {
     const dialogRef = this.dialog.open(DialogComponent, {
       panelClass: 'modal-material-template',
       data: {
@@ -37,14 +58,14 @@ export class AdminComponent implements OnInit {
         }
       },
       autoFocus: false,
-
       width: '800px',
       height: '400px'
     });
 
     this.closeDialog(dialogRef);
   }
-  changeTask(e) {
+
+  changeTaskDialog(e) {
     const dialogRef = this.dialog.open(DialogComponent, {
       panelClass: 'modal-material-template',
       data: {
@@ -63,16 +84,39 @@ export class AdminComponent implements OnInit {
     this.closeDialog(dialogRef);
   }
 
+  changeTask(task: Task) {
+    this.tasks = this.tasks.map(t => {
+      if (t.id === task.id) {
+        return task;
+      }
+      return t;
+    });
+    this.updateDataChart(this.tasks);
+  }
+
+  newTask(task: Task) {
+    //тут так же делаем post запрос на добавление
+    this.tasks.push(task);
+    this.updateDataChart(this.tasks);
+  }
+
   closeDialog(dialogRef: MatDialogRef<any>) {
     dialogRef.afterOpened()
       .subscribe(() => {
         const subs = dialogRef.componentInstance[`myEmitter`]
-          .subscribe((result) => {
-            console.log(result);
-            dialogRef.close();
-            dialogRef.afterClosed().subscribe(() => {
-              console.log('unsubscribed'); subs.unsubscribe();
-            });
+          .subscribe((result: MethodTask) => {
+            switch (result.method) {
+              case 'edit':
+                this.changeTask(result.task);
+                dialogRef.close();
+                dialogRef.afterClosed().subscribe(() => subs.unsubscribe());
+                break;
+              case 'add':
+                this.newTask(result.task);
+                dialogRef.close();
+                dialogRef.afterClosed().subscribe(() => subs.unsubscribe());
+                break;
+            }
           });
       });
   }

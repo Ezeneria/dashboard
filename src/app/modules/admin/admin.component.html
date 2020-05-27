@@ -4,8 +4,12 @@
       class="search"
       (searchWord)="searchResult($event)">
     </app-filter-search>
+    <div class="chart">
+      <app-chart id="pie-chart" [dataChart]="dataChartObs"
+      ></app-chart>
+    </div>
     <div class="add-task">
-      <button class="btn" (click)="addTask($event)">
+      <button class="btn" (click)="addTaskDialog($event)">
         Add task
       </button>
     </div>
@@ -13,13 +17,14 @@
       <div class="list">
         <app-list
           class="app-list"
-          (changedTask) = "changeTask($event)"
+          (changedTask) = "changeTaskDialog($event)"
           [list]="tasks | filter: status.progress: search">
         </app-list>
       </div>
       <div class="list">
         <app-list
           class="app-list"
+          (changedTask) = "changeTaskDialog($event)"
           [list]="tasks | filter: status.done: search">
         </app-list>
       </div>

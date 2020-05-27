@@ -4,14 +4,15 @@
     {{ placeholder }}
   </span>
     <input
-    class="nomax"
-    *ngIf="!textarea"
-    type="text"
-    (input)="onChange($event.target.value)" [value]="value"
+      *ngIf="!textarea"
+      type="text"
+      (blur)="onTouch()"
+      (input)="onChange($event.target.value)" [value]="value"
   >
     <textarea
       *ngIf="textarea"
       type="text"
+      (blur)="onTouch()"
       (input)="onChange($event.target.value)"
       [value]="value">
     </textarea>

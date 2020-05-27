@@ -1,6 +1,6 @@
 <label for="{{id}}">
-  <select id="{{id}}" [(ngModel)]="selectedOption" [value]="value">
-    <option *ngFor="let option of options; index as index;" [ngValue]="index">
+  <select id="{{id}}" [(ngModel)]="value" (change)="onChange($event.target.value)" >
+    <option *ngFor="let option of options ; index as index;" [value]="option">
       {{ option }}
     </option>
   </select>

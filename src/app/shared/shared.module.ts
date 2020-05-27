@@ -9,7 +9,6 @@ import { FilterSearchComponent } from './components/filter-search/filter-search.
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { InputComponent } from './components/ui/input/input.component';
 import { SelectComponent } from './components/ui/select/select.component';
-// import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -26,14 +25,15 @@ import { SelectComponent } from './components/ui/select/select.component';
     ListComponent,
     FilterPipe,
     FilterSearchComponent,
-    InputComponent
+    InputComponent,
+    SelectComponent,
+    ChartComponent
   ],
   imports: [
     CommonModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    // DragDropModule
   ],
   entryComponents: [
     DialogComponent,

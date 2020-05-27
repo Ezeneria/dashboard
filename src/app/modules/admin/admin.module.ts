@@ -27,10 +27,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     SharedModule,
     DragDropModule,
   ],
-  entryComponents: [
-    FormNewTaskComponent,
-    ChangeTaskComponent
-  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

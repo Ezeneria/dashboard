@@ -1,5 +1,5 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
@@ -11,19 +11,18 @@ import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, Contr
   }]
 })
 
-export class SelectComponent {
+export class SelectComponent implements ControlValueAccessor {
+
   @Input() id = 'select';
   @Input() options: [string];
-  @Input() selectedOption: string;
   @Input() public placeholder = 'placeholder';
 
-  public value;
+  public value: string;
 
   onChange: (e) => void;
   onTouch: () => void;
 
-
-  registerOnChange(fn: any){
+  registerOnChange(fn){
     this.onChange = fn;
   }
 

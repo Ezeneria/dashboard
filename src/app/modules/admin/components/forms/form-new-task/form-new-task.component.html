@@ -1,5 +1,47 @@
-<p>form-new-task works!</p>
-<form class="form-change-task">
-  <input type="text">
+<form [formGroup]="form"  class="form-change-task" (ngSubmit)="submit()">
+  <div class="form-control">
+    <app-input
+      formControlName="title"
+      placeholder="Title"
+    ></app-input>
+    <div *ngIf="title?.invalid && (title?.dirty || title?.touched)">
+      <div class="error" *ngIf="title?.touched || title?.errors?.required ">
+        Title is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <app-input
+      class="form-control"
+      formControlName="description"
+      placeholder="Description"
+      textarea="true"
+    ></app-input>
+  </div>
+
+  <div class="form-control">
+    <app-select
+      formControlName="status"
+      placeholder="status"
+      [options]="status"
+    ></app-select>
+  </div>
+
+  <div class="form-control">
+    <app-select
+      formControlName="priority"
+      placeholder="priority"
+      [options]="priority"
+    ></app-select>
+  </div>
+
+  <button
+    class="btn btn--black"
+    type="submit"
+    [disabled]="form.invalid"
+    [ngClass]="{'btn--disable': form.invalid}">
+    Change task
+  </button>
 </form>
-<button (click)="addTask()">Add task</button>
+

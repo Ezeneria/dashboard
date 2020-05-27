@@ -4,13 +4,10 @@
       formControlName="title"
       placeholder="Title"
     ></app-input>
-
-    <div class="error" *ngIf="title?.errors?.required">
-      Title is required
-    </div>
-
-    <div class="error" *ngIf="title?.errors?.maxlength">
-      Maximum 30 symbols
+    <div *ngIf="title?.invalid && (title?.dirty || title?.touched)">
+      <div class="error" *ngIf="title?.touched || title?.errors?.required ">
+        Title is required
+      </div>
     </div>
   </div>
 
@@ -24,19 +21,27 @@
   </div>
 
   <div class="form-control">
-    <app-input
+    <app-select
       formControlName="status"
       placeholder="status"
-    ></app-input>
+      [options]="status"
+    ></app-select>
   </div>
 
   <div class="form-control">
-    <app-input
+    <app-select
       formControlName="priority"
-      placeholder="Prriority"
-    ></app-input>
+      placeholder="priority"
+      [options]="priority"
+    ></app-select>
   </div>
-</form>
-<button (click)="checkForm()">Check form</button>
 
-<button (click)="changeTask()">Change task</button>
+  <button
+    class="btn btn--black"
+    type="suubmit"
+    [disabled]="form.invalid"
+    [ngClass]="{'btn--disable': form.invalid}">
+    Change task
+  </button>
+</form>
+

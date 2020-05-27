@@ -8,11 +8,11 @@ import {delay, dematerialize, materialize, mergeMap} from 'rxjs/operators';
 import {Task} from '../../../assets/models/models';
 
 const tasks: Task[] = [
-  { id: 1, status: 'Progress', priority: 'High', title: 'To do test app', description: 'To do test app for company customer' },
-  { id: 2, status: 'Progress', priority: 'Mid', title: 'Task 2', description: 'Description task 2' },
-  { id: 3, status: 'Progress', priority: 'Low', title: 'Task 3', description: 'Description task 3' },
-  { id: 4, status: 'Done', priority: 'Mid', title: 'Task 4', description: 'Description task 4' },
-  { id: 5, status: 'Done', priority: 'Low', title: 'Task 5', description: 'Description task 5' },
+  { id: 1, status: 'progress', priority: 'high', title: 'To do test app', description: 'To do test app for company customer' },
+  { id: 2, status: 'progress', priority: 'mid', title: 'Task 2', description: 'Description task 2' },
+  { id: 3, status: 'progress', priority: 'low', title: 'Task 3', description: 'Description task 3' },
+  { id: 4, status: 'done', priority: 'mid', title: 'Task 4', description: 'Description task 4' },
+  { id: 5, status: 'done', priority: 'low', title: 'Task 5', description: 'Description task 5' },
 ];
 
 @Injectable()

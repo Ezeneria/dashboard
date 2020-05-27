@@ -11,4 +11,7 @@ export class AdminService {
   getTasks(): Observable<any> {
     return this.http.get('/admin/tasks');
   }
+  changeTask(task: Task): Observable<any> {
+    return this.http.post('/admin/tasksChange', task);
+  }
 }

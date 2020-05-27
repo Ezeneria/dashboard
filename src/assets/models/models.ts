@@ -17,3 +17,8 @@ export enum eStatusTask {
   progress = 'progress',
   done = 'done',
 }
+export enum ePriorityTask {
+  mid = 'mid',
+  low = 'low',
+  high = 'high'
+}

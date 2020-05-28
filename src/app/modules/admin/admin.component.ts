@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, OnInit} from '@angular/core';
 import {AdminService} from './admin.service';
-import {eStatusTask, Task} from '../../../assets/models/models';
+import {ePriorityTask, eStatusTask, Task} from '../../../assets/models/models';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormNewTaskComponent} from './components/forms/form-new-task/form-new-task.component';
 import {DialogComponent} from '../../shared/components/dialog/dialog.component';
@@ -37,15 +37,22 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  updateDataChart(data) {
-    const localData = data.reduce((o, i: Task) => {
-      if (!o.hasOwnProperty(i.status)) {
-        o[i.status] = 0;
-      }
-      o[i.status]++;
-      return o;
-    }, {});
-    this.dataChartObs.next(localData);
+  updateDataChart(data: Task[]) {
+    const dataChart = {};
+    Object.entries(eStatusTask).forEach((s) => {
+      Object.entries(ePriorityTask).forEach((p) => {
+        data.forEach((t) => {
+            if (!dataChart[`${s[0] + p[0]}`]) {
+              dataChart[`${s[0] + p[0]}`] = 0;
+            }
+            if (s[0] === t.status && p[0] === t.priority){
+              console.log('asdasd');
+              dataChart[`${s[0] + p[0]}`] += 1;
+            }
+        });
+      });
+    });
+    this.dataChartObs.next(dataChart);
   }
   addTaskDialog(e) {
     const dialogRef = this.dialog.open(DialogComponent, {

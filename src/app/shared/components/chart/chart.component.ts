@@ -11,12 +11,12 @@ import {Subject} from 'rxjs';
 export class ChartComponent implements OnInit, OnDestroy {
   @Input() public id;
   @Input() dataChart: Subject<{}>;
-
+  localData: {};
   width = 150;
   height = 150;
   margin = 20;
   radius = Math.min(this.width, this.height) / 2 - this.margin;
-  //не указал типы, потому что придётся ещё дольше писать(т.к. на ts с d3 я не работал)
+  //не указал типы, потому что придётся ещё дольше писать по вреемени(т.к. на ts с d3 я не работал)
   pieSections;
   color;
   path;
@@ -33,14 +33,15 @@ export class ChartComponent implements OnInit, OnDestroy {
       .attr('transform', `translate(${ this.width / 2 }, ${ this.height / 2 })`);
     this.pieSections = d3.pie().value((d) => d.value);
     this.color = d3.scaleOrdinal()
-      .range(['#c50b2a', '#00ff49']);
+      .range(['#620B1C', '#A40B29', '#c50b2a', '#008834', '#00ff49', '#00BC3E']);
     this.arc =  d3.arc()
       .innerRadius(0)
       .outerRadius(this.radius);
     this.dataChart.subscribe(val => {
-      this.color.domain(val);
+      this.localData = { ...this.localData, ...val};
+      this.color.domain(this.localData);
       this.pieSections.value((d) => d.value);
-      const dataReady = this.pieSections(d3.entries(val));
+      const dataReady = this.pieSections(d3.entries(this.localData));
 
       if (!this.firstLoad) {
         this.svg.selectAll('path').remove();

@@ -21,7 +21,9 @@ export class HomeComponent implements OnInit {
 
   submit(event) {
     event.preventDefault();
-    this.authenticateService.login(this.form.value);
+    this.authenticateService.login(this.form.value).subscribe(t => {
+      this.router.navigate['/admin'];
+    })
   }
 
   ngOnInit(): void {

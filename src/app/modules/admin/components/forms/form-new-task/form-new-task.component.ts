@@ -1,7 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {DialogComponent} from '../../../../../shared/components/dialog/dialog.component';
-import {ePriorityTask, eStatusTask, Task} from '../../../../../../assets/models/models';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ePriorityTask, eStatusTask} from '../../../../../../assets/models/models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({

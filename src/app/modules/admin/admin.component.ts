@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Component, EventEmitter, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {AdminService} from './admin.service';
 import {ePriorityTask, eStatusTask, Task} from '../../../assets/models/models';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormNewTaskComponent} from './components/forms/form-new-task/form-new-task.component';
 import {DialogComponent} from '../../shared/components/dialog/dialog.component';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+
 import {ChangeTaskComponent} from './components/forms/change-task/change-task.component';
-import {Observable, Subject} from 'rxjs';
+import { Subject} from 'rxjs';
 
 interface MethodTask {
   method: string;
@@ -46,7 +46,6 @@ export class AdminComponent implements OnInit {
               dataChart[`${s[0] + p[0]}`] = 0;
             }
             if (s[0] === t.status && p[0] === t.priority){
-              console.log('asdasd');
               dataChart[`${s[0] + p[0]}`] += 1;
             }
         });

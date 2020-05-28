@@ -33,7 +33,6 @@ export class BackendInterceptor implements HttpInterceptor {
     }
 
     function authenticate() {
-      console.log('authenticated');
       const { username, password }: User = body;
       const user = users.find(x => x.username === username && x.password === password);
 

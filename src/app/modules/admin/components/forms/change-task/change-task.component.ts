@@ -1,8 +1,7 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ePriorityTask, eStatusTask, Task} from '../../../../../../assets/models/models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TaskServiceService} from '../../../../../core/services/task-service.service';
-import {AdminService} from '../../../admin.service';
+
 
 @Component({
   selector: 'app-change-task',

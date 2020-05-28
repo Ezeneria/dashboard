@@ -26,7 +26,6 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.svg = d3.select(`#${this.id}`)
       .append('svg')
-      .attr('transform', 'translateY(-100%)')
       .attr('width', this.width)
       .attr('height', this.height)
       .append('g')

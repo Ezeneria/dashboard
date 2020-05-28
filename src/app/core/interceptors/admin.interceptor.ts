@@ -27,7 +27,6 @@ export class AdminInterceptor implements HttpInterceptor {
         dematerialize());
 
     function handleRequest() {
-      console.log('handed');
       switch (true) {
         case url.endsWith( '/admin/tasks') && method === 'GET' :
           return getTasks(tasks);
@@ -37,11 +36,7 @@ export class AdminInterceptor implements HttpInterceptor {
     }
 
     function getTasks(body) {
-      console.log('tasks', body);
       return of(new HttpResponse({ status: 200, body }));
     }
-    // function error(message) {
-    //   return throwError({ status: 400 , error: { message }});
-    // }
   }
 }

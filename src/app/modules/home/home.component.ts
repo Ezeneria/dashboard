@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   submit(event) {
     event.preventDefault();
-    this.authenticateService.login(this.form.value).subscribe(res => console.log(res));
+    this.authenticateService.login(this.form.value);
   }
 
   ngOnInit(): void {

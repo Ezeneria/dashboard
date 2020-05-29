@@ -51,6 +51,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         .data(dataReady)
         .enter()
         .append('path')
+        .transition(2000)
         .attr('d', this.arc
         )
         .attr('fill', d => this.color(d.data.key))

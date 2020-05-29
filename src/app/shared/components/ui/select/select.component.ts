@@ -13,8 +13,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export class SelectComponent implements ControlValueAccessor {
 
-  @Input() id = 'select';
-  @Input() options: [string];
+  @Input() public id = 'select';
+  @Input() public options: [string];
   @Input() public placeholder = 'placeholder';
 
   public value: string;

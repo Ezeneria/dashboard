@@ -30,7 +30,7 @@
           (cdkDropListDropped)="drop($event)"
           class="app-list"
           (changedTask) = "changeTaskDialog($event)"
-          [list]="tasksProgress.items">
+          [list]="tasksProgress.items  | filter: status.progress: search">
         </app-list>
 
         <app-pagination
@@ -47,7 +47,7 @@
           (cdkDropListDropped)="drop($event)"
           class="app-list"
           (changedTask) = "changeTaskDialog($event)"
-          [list]="tasksDone.items">
+          [list]="tasksDone.items  | filter: status.done: search">
         </app-list>
 
         <app-pagination

@@ -4,9 +4,8 @@ import {ePriorityTask, eStatusTask, Pagination, Task, Tasks} from '../../../asse
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormNewTaskComponent} from './components/forms/form-new-task/form-new-task.component';
 import {DialogComponent} from '../../shared/components/dialog/dialog.component';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {ChangeTaskComponent} from './components/forms/change-task/change-task.component';
-import { Subject} from 'rxjs';
 
 interface MethodTask {
   method: string;
@@ -24,7 +23,6 @@ export class AdminComponent implements OnInit {
   public status = eStatusTask;
   public tasksProgress: Tasks = null;
   public tasksDone: Tasks = null;
-  public dataChartObs = new Subject();
   public dataChart;
   public pagination: Pagination = {
     offset: 0,
@@ -61,7 +59,6 @@ export class AdminComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
-
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -73,6 +70,7 @@ export class AdminComponent implements OnInit {
         item.status = eStatusTask.progress;
       }
       event.container.data.splice(event.currentIndex, 0, item);
+      this.updateDataChart([...event.previousContainer.data, ...event.container.data]);
     }
   }
 
@@ -168,8 +166,13 @@ export class AdminComponent implements OnInit {
           });
       });
   }
-  searchResult(e) {
-    this.search = e;
+
+  searchResult(e: string) {
+    if (e.length >= 3) {
+      this.search = e;
+      // this.tasksDone.items = this.tasksDone.items.filter((t: Task) => t.status.includes(e));
+      // this.tasksProgress.items = this.tasksProgress.items.filter((t: Task) => t.status.includes(e));
+    }
   }
 
   paginate(status, e) {

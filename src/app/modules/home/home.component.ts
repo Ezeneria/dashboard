@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticateService.currentUser.subscribe(user => console.log('current user', user));
     this.form = this.fb.group({
       username: [null, Validators.compose([Validators.minLength(6), Validators.required])],
       password: [null, Validators.compose([Validators.minLength(8), Validators.required])]

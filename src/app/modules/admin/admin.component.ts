@@ -1,10 +1,10 @@
 import { Component, OnInit} from '@angular/core';
 import {AdminService} from './admin.service';
-import {ePriorityTask, eStatusTask, Task} from '../../../assets/models/models';
+import {ePriorityTask, eStatusTask, Pagination, Task, Tasks} from '../../../assets/models/models';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormNewTaskComponent} from './components/forms/form-new-task/form-new-task.component';
 import {DialogComponent} from '../../shared/components/dialog/dialog.component';
-
+import {CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem} from '@angular/cdk/drag-drop';
 import {ChangeTaskComponent} from './components/forms/change-task/change-task.component';
 import { Subject} from 'rxjs';
 
@@ -22,18 +22,24 @@ interface MethodTask {
 export class AdminComponent implements OnInit {
   public search: string;
   public status = eStatusTask;
-  public tasks: Task[] = [];
-
+  public tasksProgress: Tasks = null;
+  public tasksDone: Tasks = null;
   public dataChartObs = new Subject();
+  public dataChart;
+  public pagination: Pagination = {
+    offset: 0,
+    limit: 10,
+  };
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog)
   {}
 
   ngOnInit(): void {
-    this.adminService.getTasks().subscribe((tasks: Task[]) => {
-      this.tasks = tasks;
-      this.updateDataChart(tasks);
+    this.adminService.getTasks(this.pagination).subscribe((tasks: Tasks[]) => {
+      this.tasksProgress = tasks[0];
+      this.tasksDone = tasks[1];
+      this.updateDataChart([...tasks[0].items, ...tasks[1].items]);
     });
   }
 
@@ -51,8 +57,25 @@ export class AdminComponent implements OnInit {
         });
       });
     });
-    this.dataChartObs.next(dataChart);
+    this.dataChart = dataChart;
   }
+
+  drop(event: CdkDragDrop<any>) {
+
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      const item: Task = event.previousContainer.data[event.previousIndex];
+      event.previousContainer.data.splice(event.previousIndex, 1);
+      if (item.status === eStatusTask.progress) {
+        item.status = eStatusTask.done;
+      } else  {
+        item.status = eStatusTask.progress;
+      }
+      event.container.data.splice(event.currentIndex, 0, item);
+    }
+  }
+
   addTaskDialog(e) {
     const dialogRef = this.dialog.open(DialogComponent, {
       panelClass: 'modal-material-template',
@@ -91,19 +114,38 @@ export class AdminComponent implements OnInit {
   }
 
   changeTask(task: Task) {
-    this.tasks = this.tasks.map(t => {
-      if (t.id === task.id) {
-        return task;
-      }
-      return t;
-    });
-    this.updateDataChart(this.tasks);
+    if (task.status === this.status.done) {
+      this.tasksDone.items = this.tasksDone.items.map(t => {
+        if (t.id === task.id) {
+          return task;
+        }
+        return t;
+      });
+    } else {
+      this.tasksProgress.items = this.tasksProgress.items.map(t => {
+        if (t.id === task.id) {
+          return task;
+        }
+        return t;
+      });
+    }
+
+    this.updateDataChart([...this.tasksProgress.items, ...this.tasksDone.items]);
   }
 
-  newTask(task: Task) {
-    //тут так же делаем post запрос на добавление
-    this.tasks.push(task);
-    this.updateDataChart(this.tasks);
+  newTask(t: Task) {
+    if (t.status === this.status.done) {
+      let taskGap: Task[] = this.tasksDone.items;
+      taskGap.unshift( t );
+      taskGap = taskGap.slice(0, taskGap.length - 1);
+      this.tasksDone.items = taskGap;
+    } else {
+        let taskGap: Task[] = this.tasksProgress.items;
+        taskGap.unshift( t );
+        taskGap = taskGap.slice(0, taskGap.length - 1);
+        this.tasksProgress.items = taskGap;
+    }
+    this.updateDataChart([...this.tasksProgress.items, ...this.tasksDone.items]);
   }
 
   closeDialog(dialogRef: MatDialogRef<any>) {
@@ -128,5 +170,18 @@ export class AdminComponent implements OnInit {
   }
   searchResult(e) {
     this.search = e;
+  }
+
+  paginate(status, e) {
+    if (status === this.status.done) {
+      this.adminService.getTasksDone(e).subscribe((tasks) => {
+        this.tasksDone.items = tasks.items;
+      });
+    } else {
+      this.adminService.getTasksProgress(e).subscribe(tasks => {
+        this.tasksProgress.items = tasks.items;
+      });
+    }
+
   }
 }

@@ -1,5 +1,5 @@
 <div *ngIf="list" class="list">
-  <div *ngFor="let item of list; trackBy: trackByFn" class="list-item" (click)="openTask(item)">
+  <div *ngFor="let item of list; trackBy: trackByFn" class="list-item" (click)="openTask(item)" cdkDrag>
     <div class="header" [ngClass]="item.status | lowercase">
       <div class="top">
         <div class="status">

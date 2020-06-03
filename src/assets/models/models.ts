@@ -13,6 +13,15 @@ export interface Task {
   title: string;
   description: string;
 }
+export interface Tasks {
+  items: Task[];
+  total: number;
+}
+
+export interface Pagination {
+  limit: number;
+  offset: number;
+}
 export enum eStatusTask {
   progress = 'progress',
   done = 'done',

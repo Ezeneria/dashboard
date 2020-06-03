@@ -4,32 +4,58 @@
       class="search"
       (searchWord)="searchResult($event)">
     </app-filter-search>
+
     <div class="sort">
 
     </div>
+
     <div class="chart">
-      <app-chart id="pie-chart" [dataChart]="dataChartObs"
+      <app-chart
+        id="pie-chart"
+        [dataChart]="dataChart"
       ></app-chart>
     </div>
+
     <div class="add-task">
       <button class="btn" (click)="addTaskDialog($event)">
         Add task
       </button>
     </div>
-    <div class="tasks">
+
+    <div class="tasks" *ngIf="tasksDone && tasksProgress" cdkDropListGroup>
       <div class="list">
         <app-list
+          cdkDropList
+          [cdkDropListData]="tasksProgress.items"
+          (cdkDropListDropped)="drop($event)"
           class="app-list"
           (changedTask) = "changeTaskDialog($event)"
-          [list]="tasks | filter: status.progress: search">
+          [list]="tasksProgress.items">
         </app-list>
+
+        <app-pagination
+          [itemLength]="tasksProgress.total"
+          [perPage]="10"
+          (paginatedPage) ="paginate(status.progress, $event)">
+        </app-pagination>
       </div>
+
       <div class="list">
         <app-list
+          cdkDropList
+          [cdkDropListData]="tasksDone.items"
+          (cdkDropListDropped)="drop($event)"
           class="app-list"
           (changedTask) = "changeTaskDialog($event)"
-          [list]="tasks | filter: status.done: search">
+          [list]="tasksDone.items">
         </app-list>
+
+        <app-pagination
+          [itemLength]="tasksDone.total"
+          [perPage]="10"
+          (paginatedPage) ="paginate(status.done, $event)">
+        </app-pagination>
+<!--        | filter: status.progress: search-->
       </div>
     </div>
   </div>

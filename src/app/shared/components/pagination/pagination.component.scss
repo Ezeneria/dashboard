@@ -1,0 +1,31 @@
+@import "./../../../../assets/variables";
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-pages {
+    display: flex;
+    margin: 0 10px;
+  }
+  &-prev, &-next, &-page {
+    padding: 2px 5px;
+    background-color: $torch-red-600;
+    color: white;
+    cursor: pointer;
+  }
+  &-prev {
+
+  }
+  &-next {
+  }
+  &-page {
+  margin-right: 4px;
+    &.active {
+      background-color: $torch-red-800;
+    }
+  &:last-child{
+    margin-right: 0;
+  }
+  }
+}

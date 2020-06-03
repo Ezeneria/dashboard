@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { InputComponent } from './components/ui/input/input.component';
 import { SelectComponent } from './components/ui/select/select.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -29,13 +30,15 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     FilterSearchComponent,
     InputComponent,
     SelectComponent,
-    ChartComponent
+    ChartComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule
   ],
   entryComponents: [
     DialogComponent,

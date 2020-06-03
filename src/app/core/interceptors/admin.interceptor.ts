@@ -5,15 +5,9 @@ import {
 
 import {Observable, of, throwError} from 'rxjs';
 import {delay, dematerialize, materialize, mergeMap} from 'rxjs/operators';
-import {Task} from '../../../assets/models/models';
+import { taskDone, tasksProgress} from './../../../assets/static-data/data';
+import {Pagination, Task} from '../../../assets/models/models';
 
-const tasks: Task[] = [
-  { id: 1, status: 'progress', priority: 'high', title: 'To do test app', description: 'To do test app for company customer' },
-  { id: 2, status: 'progress', priority: 'mid', title: 'Task 2', description: 'Description task 2' },
-  { id: 3, status: 'progress', priority: 'low', title: 'Task 3', description: 'Description task 3' },
-  { id: 4, status: 'done', priority: 'mid', title: 'Task 4', description: 'Description task 4' },
-  { id: 5, status: 'done', priority: 'low', title: 'Task 5', description: 'Description task 5' },
-];
 
 @Injectable()
 export class AdminInterceptor implements HttpInterceptor {
@@ -28,15 +22,28 @@ export class AdminInterceptor implements HttpInterceptor {
 
     function handleRequest() {
       switch (true) {
-        case url.endsWith( '/admin/tasks') && method === 'GET' :
-          return getTasks(tasks);
+        case url.endsWith( '/admin/tasks/progress') && method === 'POST' :
+          return getTasks(tasksProgress, tasksProgress.length, body);
+        case url.endsWith( '/admin/tasks/done') && method === 'POST' :
+          return getTasks(taskDone, taskDone.length, body);
         default:
           return next.handle(req);
       }
     }
 
-    function getTasks(body) {
-      return of(new HttpResponse({ status: 200, body }));
+    function getTasks(tasks: Task[], total: number, pagination: Pagination) {
+      let t = [];
+      if (pagination.limit !== 0 && pagination.offset === 0) {
+        t = tasks.slice(0, pagination.limit);
+      } else if (pagination.limit !== 0 && pagination.offset !== 0) {
+        t = tasks.slice(pagination.offset, pagination.offset + pagination.limit);
+      } else {
+        t = tasks;
+      }
+      return of(new HttpResponse({ status: 200, body: {
+          items: t,
+          total
+        } }));
     }
   }
 }
